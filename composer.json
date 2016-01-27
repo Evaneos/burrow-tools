@@ -10,7 +10,8 @@
     "require-dev" : {
         "phpunit/phpunit" : "~4.0",
         "mockery/mockery": "^0.9.4",
-        "league/event": "^2.1"
+        "league/event": "^2.1",
+        "symfony/console": "^2.7|^3.0"
     },
 
     "autoload": {
@@ -26,6 +27,7 @@
     },
 
     "suggest": {
-        "league/event": "Allows to deal with event within your application."
+        "league/event": "Allows to deal with event within your application.",
+        "symfony/console": "Allows to bootstrap a CLI command."
     }
 }
