@@ -1,5 +1,5 @@
 <?php
-namespace TwitterHangman\Tactician;
+namespace Burrow\Tactician;
 
 use Burrow\QueueConsumer;
 use League\Tactician\CommandBus;
@@ -36,7 +36,7 @@ class CommandBusConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        $command = $this->serializer->deserialize(json_decode($message));
+        $command = $this->serializer->deserialize(json_decode($message, true));
         return $this->commandBus->handle($command);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace TwitterHangman\Tactician;
+namespace Burrow\Tactician;
 
 use League\Tactician\Plugins\NamedCommand\NamedCommand;
 

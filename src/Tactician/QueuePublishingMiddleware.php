@@ -1,5 +1,5 @@
 <?php
-namespace TwitterHangman\Tactician;
+namespace Burrow\Tactician;
 
 use Burrow\QueuePublisher;
 use League\Tactician\Middleware;
@@ -41,6 +41,6 @@ class QueuePublishingMiddleware implements Middleware
             throw new \InvalidArgumentException('Command must be a NamedCommand');
         }
 
-        $this->queuePublisher->publish(json_encode($this->serializer->serialize($command)));
+        $this->queuePublisher->publish(json_encode($this->serializer->serialize($command)), $command->getCommandName());
     }
 }
