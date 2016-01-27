@@ -27,6 +27,7 @@
     },
 
     "suggest": {
-        "league/event": "Allows to deal with event within your application."
+        "league/event": "Allows to deal with event within your application.",
+        "league/tactician": "Allows to deal with command within your application."
     }
 }
