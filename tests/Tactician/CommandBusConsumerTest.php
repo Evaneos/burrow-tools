@@ -31,7 +31,7 @@ class CommandBusConsumerTest extends \PHPUnit_Framework_TestCase
         $serializedCommand = json_encode([ 'foo' => 'bar' ]);
         $command = \Mockery::mock(NamedCommand::class);
 
-        $this->serializer->shouldReceive('deserialize')->with([ 'foo' => 'bar' ])->andReturn($command)->once();
+        $this->serializer->shouldReceive('deserialize')->with([ 'foo' => 'bar' ])->andReturn($command);
         $this->commandBus->shouldReceive('handle')->with($command)->once();
 
         $consumer = new CommandBusConsumer($this->serializer, $this->commandBus);

@@ -34,7 +34,7 @@ class QueuePublishingMiddlewareTest extends \PHPUnit_Framework_TestCase
             $command->shouldReceive('getCommandName')->andReturn('baz');
         });
 
-        $this->serializer->shouldReceive('serialize')->with($command)->andReturn([ 'foo' => 'bar' ])->once();
+        $this->serializer->shouldReceive('serialize')->with($command)->andReturn([ 'foo' => 'bar' ]);
         $this->publisher->shouldReceive('publish')->with(json_encode([ 'foo' => 'bar' ]), 'baz')->once();
 
         $middleware = new QueuePublishingMiddleware($this->serializer, $this->publisher);
