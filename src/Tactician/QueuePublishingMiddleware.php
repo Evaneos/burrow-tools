@@ -41,6 +41,6 @@ class QueuePublishingMiddleware implements Middleware
             throw new \InvalidArgumentException('Command must be a NamedCommand');
         }
 
-        $this->queuePublisher->publish(json_encode($this->serializer->serialize($command)), $command->getCommandName());
+        $this->queuePublisher->publish($this->serializer->serialize($command), $command->getCommandName());
     }
 }

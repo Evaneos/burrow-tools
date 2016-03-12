@@ -36,7 +36,6 @@ class CommandBusConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        $command = $this->serializer->deserialize(json_decode($message, true));
-        return $this->commandBus->handle($command);
+        return $this->commandBus->handle($this->serializer->deserialize($message));
     }
 }

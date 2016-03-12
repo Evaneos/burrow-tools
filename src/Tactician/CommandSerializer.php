@@ -7,13 +7,13 @@ interface CommandSerializer
 {
     /**
      * @param NamedCommand $command
-     * @return array
+     * @return string
      */
     public function serialize(NamedCommand $command);
 
     /**
-     * @param  array $serializedObject
+     * @param  string $serializedObject
      * @return NamedCommand
      */
-    public function deserialize(array $serializedObject);
+    public function deserialize($serializedObject);
 }

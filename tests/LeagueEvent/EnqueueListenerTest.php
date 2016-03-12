@@ -2,15 +2,26 @@
 namespace Burrow\tests\LeagueEvent;
 
 use Burrow\LeagueEvent\EnqueueListener;
+use Burrow\LeagueEvent\EventSerializer;
 use Burrow\QueuePublisher;
-use Burrow\tests\LeagueEvent\stubs\SerializableEventImpl;
 use League\Event\Event;
 use Mockery;
 
 class EnqueueListenerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var EnqueueListener
+     */
     private $listener;
 
+    /**
+     * @var EventSerializer
+     */
+    private $serializer;
+
+    /**
+     * @var QueuePublisher
+     */
     private $queuePublisher;
 
     protected function tearDown()
@@ -21,7 +32,8 @@ class EnqueueListenerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->queuePublisher = Mockery::mock(QueuePublisher::class);
-        $this->listener = new EnqueueListener($this->queuePublisher);
+        $this->serializer = Mockery::mock(EventSerializer::class);
+        $this->listener = new EnqueueListener($this->queuePublisher, $this->serializer);
     }
 
     /**
@@ -29,28 +41,12 @@ class EnqueueListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function it_publishes_the_event_in_the_QueuePublisher()
     {
-        $event = new SerializableEventImpl('SomethingHappened', [
-            'aData' => 'something',
-            'anotherData' => 'somethingElse'
-        ]);
+        $event = new Event('SomethingHappened');
 
-        $this->queuePublisher->shouldReceive('publish')->with(json_encode([
-            'type' => 'SomethingHappened',
-            'payload' => [
-                'aData' => 'something',
-                'anotherData' => 'somethingElse'
-            ]
-        ]), 'SomethingHappened')->once();
+        $this->serializer->shouldReceive('serialize')->with($event)->andReturn('serialized');
+
+        $this->queuePublisher->shouldReceive('publish')->with('serialized', 'SomethingHappened')->once();
 
         $this->listener->handle($event);
-    }
-    
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
-    public function it_throws_an_InvalidArgumentException_if_event_is_not_an_ArraySerializable()
-    {
-        $this->listener->handle(new Event('NotASerializableEvent'));
     }
 }
