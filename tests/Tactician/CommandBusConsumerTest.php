@@ -2,13 +2,13 @@
 namespace Burrow\tests\Tactician;
 
 use Burrow\Tactician\CommandBusConsumer;
-use Burrow\Tactician\CommandSerializer;
+use Burrow\Tactician\CommandDeserializer;
 use League\Tactician\CommandBus;
 use League\Tactician\Plugins\NamedCommand\NamedCommand;
 
 class CommandBusConsumerTest extends \PHPUnit_Framework_TestCase
 {
-    private $serializer;
+    private $deserializer;
 
     private $commandBus;
 
@@ -19,7 +19,7 @@ class CommandBusConsumerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->serializer = \Mockery::mock(CommandSerializer::class);
+        $this->deserializer = \Mockery::mock(CommandDeserializer::class);
         $this->commandBus = \Mockery::mock(CommandBus::class);
     }
 
@@ -31,10 +31,10 @@ class CommandBusConsumerTest extends \PHPUnit_Framework_TestCase
         $serializedCommand = json_encode([ 'foo' => 'bar' ]);
         $command = \Mockery::mock(NamedCommand::class);
 
-        $this->serializer->shouldReceive('deserialize')->with($serializedCommand)->andReturn($command);
+        $this->deserializer->shouldReceive('deserialize')->with($serializedCommand)->andReturn($command);
         $this->commandBus->shouldReceive('handle')->with($command)->once();
 
-        $consumer = new CommandBusConsumer($this->serializer, $this->commandBus);
+        $consumer = new CommandBusConsumer($this->deserializer, $this->commandBus);
         $consumer->consume($serializedCommand);
     }
 }

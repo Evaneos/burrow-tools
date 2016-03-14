@@ -12,20 +12,20 @@ final class EventQueueConsumer implements QueueConsumer
     private $emitter;
 
     /**
-     * @var EventSerializer
+     * @var EventDeserializer
      */
-    private $serializer;
+    private $deserializer;
 
     /**
      * EventQueueConsumer constructor.
      *
-     * @param EmitterInterface $emitter
-     * @param EventSerializer $serializer
+     * @param EmitterInterface  $emitter
+     * @param EventDeserializer $deserializer
      */
-    public function __construct(EmitterInterface $emitter, EventSerializer $serializer)
+    public function __construct(EmitterInterface $emitter, EventDeserializer $deserializer)
     {
         $this->emitter = $emitter;
-        $this->serializer = $serializer;
+        $this->deserializer = $deserializer;
     }
 
 
@@ -37,7 +37,7 @@ final class EventQueueConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        $message = $this->serializer->deserialize($message);
+        $message = $this->deserializer->deserialize($message);
 
         $this->emitter->emit($message);
     }

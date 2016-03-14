@@ -1,7 +1,7 @@
 <?php
 namespace Burrow\tests\LeagueEvent;
 
-use Burrow\LeagueEvent\EventSerializer;
+use Burrow\LeagueEvent\EventDeserializer;
 use Burrow\LeagueEvent\EventQueueConsumer;
 use League\Event\EmitterInterface;
 use League\Event\Event;
@@ -20,11 +20,11 @@ class QueueConsumerTest extends \PHPUnit_Framework_TestCase
     public function it_deserialize_the_message_before_emitting_it_if_a_deserializer_is_given()
     {
         $emitter = Mockery::mock(EmitterInterface::class);
-        $serializer = Mockery::mock(EventSerializer::class);
+        $deserializer = Mockery::mock(EventDeserializer::class);
         $deserializedEvent = new Event('test');
-        $consumer = new EventQueueConsumer($emitter, $serializer);
+        $consumer = new EventQueueConsumer($emitter, $deserializer);
 
-        $serializer
+        $deserializer
             ->shouldReceive('deserialize')
             ->with(json_encode(['poney' => 'Eole']))
             ->andReturn($deserializedEvent);

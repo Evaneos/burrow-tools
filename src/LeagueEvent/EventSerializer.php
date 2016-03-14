@@ -10,10 +10,4 @@ interface EventSerializer
      * @return string
      */
     public function serialize(EventInterface $event);
-
-    /**
-     * @param  string $message
-     * @return EventInterface
-     */
-    public function deserialize($message);
 }
