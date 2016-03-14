@@ -10,10 +10,4 @@ interface CommandSerializer
      * @return string
      */
     public function serialize(NamedCommand $command);
-
-    /**
-     * @param  string $serializedObject
-     * @return NamedCommand
-     */
-    public function deserialize($serializedObject);
 }
