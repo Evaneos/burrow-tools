@@ -6,8 +6,8 @@ use League\Event\EventInterface;
 interface EventDeserializer
 {
     /**
-     * @param string $message
-     * @return string | EventInterface
+     * @param  string $message
+     * @return EventInterface
      */
     public function deserialize($message);
 }

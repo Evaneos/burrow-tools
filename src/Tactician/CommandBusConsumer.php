@@ -7,9 +7,9 @@ use League\Tactician\CommandBus;
 class CommandBusConsumer implements QueueConsumer
 {
     /**
-     * @var CommandSerializer
+     * @var CommandDeserializer
      */
-    private $serializer;
+    private $deserializer;
 
     /**
      * @var CommandBus
@@ -19,12 +19,12 @@ class CommandBusConsumer implements QueueConsumer
     /**
      * Constructor
      *
-     * @param CommandSerializer $serializer
-     * @param CommandBus        $commandBus
+     * @param CommandDeserializer $deserializer
+     * @param CommandBus          $commandBus
      */
-    public function __construct(CommandSerializer $serializer, CommandBus $commandBus)
+    public function __construct(CommandDeserializer $deserializer, CommandBus $commandBus)
     {
-        $this->serializer = $serializer;
+        $this->deserializer = $deserializer;
         $this->commandBus = $commandBus;
     }
 
@@ -36,7 +36,6 @@ class CommandBusConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        $command = $this->serializer->deserialize(json_decode($message, true));
-        return $this->commandBus->handle($command);
+        return $this->commandBus->handle($this->deserializer->deserialize($message));
     }
 }

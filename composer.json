@@ -4,7 +4,7 @@
     "license": "MIT",
    
     "require" : {
-        "evaneos/burrow": "~2.0"
+        "evaneos/burrow": "~3.0"
     },
 
     "require-dev" : {

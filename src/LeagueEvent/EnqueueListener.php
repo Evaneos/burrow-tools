@@ -13,12 +13,20 @@ final class EnqueueListener extends AbstractListener
     private $publisher;
 
     /**
-     * EnqueueListener constructor.
-     * @param QueuePublisher $publisher
+     * @var EventSerializer
      */
-    public function __construct(QueuePublisher $publisher)
+    private $serializer;
+
+    /**
+     * EnqueueListener constructor.
+     *
+     * @param QueuePublisher  $publisher
+     * @param EventSerializer $serializer
+     */
+    public function __construct(QueuePublisher $publisher, EventSerializer $serializer)
     {
         $this->publisher = $publisher;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -30,11 +38,6 @@ final class EnqueueListener extends AbstractListener
      */
     public function handle(EventInterface $event)
     {
-        if(!$event instanceof SerializableEvent)
-        {
-            throw new \InvalidArgumentException(sprintf('Cannot serialize %s event.', $event->getName()));
-        }
-
-        $this->publisher->publish(json_encode($event->toArray()), $event->getName());
+        $this->publisher->publish($this->serializer->serialize($event), $event->getName());
     }
 }

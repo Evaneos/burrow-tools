@@ -3,14 +3,8 @@ namespace Burrow\Tactician;
 
 use League\Tactician\Plugins\NamedCommand\NamedCommand;
 
-interface CommandSerializer
+interface CommandDeserializer
 {
-    /**
-     * @param NamedCommand $command
-     * @return string
-     */
-    public function serialize(NamedCommand $command);
-
     /**
      * @param  string $serializedObject
      * @return NamedCommand

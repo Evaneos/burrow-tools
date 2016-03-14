@@ -10,6 +10,7 @@ final class EventQueueConsumer implements QueueConsumer
      * @var EmitterInterface
      */
     private $emitter;
+
     /**
      * @var EventDeserializer
      */
@@ -17,10 +18,11 @@ final class EventQueueConsumer implements QueueConsumer
 
     /**
      * EventQueueConsumer constructor.
-     * @param EmitterInterface $emitter
+     *
+     * @param EmitterInterface  $emitter
      * @param EventDeserializer $deserializer
      */
-    public function __construct(EmitterInterface $emitter, EventDeserializer $deserializer = null)
+    public function __construct(EmitterInterface $emitter, EventDeserializer $deserializer)
     {
         $this->emitter = $emitter;
         $this->deserializer = $deserializer;
@@ -35,12 +37,7 @@ final class EventQueueConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        $message = json_decode($message, true);
-
-        if($this->deserializer)
-        {
-            $message = $this->deserializer->deserialize($message);
-        }
+        $message = $this->deserializer->deserialize($message);
 
         $this->emitter->emit($message);
     }
