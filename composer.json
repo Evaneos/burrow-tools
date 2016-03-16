@@ -12,7 +12,8 @@
         "mockery/mockery": "^0.9.4",
         "league/event": "^2.1",
         "league/tactician": "^1.0",
-        "symfony/console": "^2.7|^3.0"
+        "symfony/console": "^2.7|^3.0",
+        "remi-san/transaction-manager": "^1.0"
     },
 
     "autoload": {
@@ -30,6 +31,7 @@
     "suggest": {
         "league/event": "Allows to deal with event within your application.",
         "league/tactician": "Allows to deal with command within your application.",
-        "symfony/console": "Allows to bootstrap a CLI command."
+        "symfony/console": "Allows to bootstrap a CLI command.",
+        "remi-san/transaction-manager": "Allows to make a consumer transactional using a transaction manager"
     }
 }
