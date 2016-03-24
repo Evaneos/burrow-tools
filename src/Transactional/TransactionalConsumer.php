@@ -7,7 +7,7 @@ use Burrow\QueueConsumer;
 use RemiSan\TransactionManager\Exception\BeginException;
 use RemiSan\TransactionManager\Transactional;
 
-class TransactionalConsumer
+class TransactionalConsumer implements QueueConsumer
 {
     /**
      * @var QueueConsumer
@@ -36,6 +36,7 @@ class TransactionalConsumer
      *
      * @param  string $message
      *
+     * @return string|null|void
      *
      * @throws \Exception
      */
