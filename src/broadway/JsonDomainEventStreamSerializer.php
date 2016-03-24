@@ -5,7 +5,7 @@ namespace Burrow\Broadway;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
 
-class SimpleDomainEventStreamSerializer implements DomainEventStreamSerializer
+class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
 {
     /**
      * @var DomainMessageSerializer

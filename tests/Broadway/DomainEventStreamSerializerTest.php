@@ -7,7 +7,7 @@ use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Burrow\Broadway\DomainMessageSerializer;
-use Burrow\Broadway\SimpleDomainEventStreamSerializer;
+use Burrow\Broadway\JsonDomainEventStreamSerializer;
 
 class DomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,7 +40,7 @@ class DomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
              ->with($event)
              ->andReturn(['serialized']);
 
-        $serializer = new SimpleDomainEventStreamSerializer($this->serializer);
+        $serializer = new JsonDomainEventStreamSerializer($this->serializer);
         $serialized = $serializer->serialize($stream);
 
         $this->assertEquals('[["serialized"]]', $serialized);
@@ -60,7 +60,7 @@ class DomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
              ->with(['serialized'])
              ->andReturn($event);
 
-        $serializer = new SimpleDomainEventStreamSerializer($this->serializer);
+        $serializer = new JsonDomainEventStreamSerializer($this->serializer);
         $deserialized = $serializer->deserialize('[["serialized"]]');
 
         $this->assertEquals($stream, $deserialized);
