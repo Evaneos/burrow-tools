@@ -14,7 +14,8 @@
         "league/tactician": "^1.0",
         "symfony/console": "^2.7|^3.0",
         "remi-san/transaction-manager": "^1.0",
-        "broadway/broadway": "^0.8"
+        "broadway/broadway": "^0.8",
+        "remi-san/serializer": "^1.0"
     },
 
     "autoload": {
@@ -34,6 +35,7 @@
         "league/tactician": "Allows to deal with command within your application.",
         "symfony/console": "Allows to bootstrap a CLI command.",
         "remi-san/transaction-manager": "Allows to make a consumer transactional using a transaction manager",
-        "broadway/broadway": "Allows to use broadway with Burrow."
+        "broadway/broadway": "Allows to use broadway with Burrow.",
+        "remi-san/serializer": "Allows to use the universal tactician serializer"
     }
 }
