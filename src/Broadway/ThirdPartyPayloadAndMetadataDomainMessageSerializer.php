@@ -5,7 +5,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Serializer\SerializerInterface;
 
-class ArrayDomainMessageSerializer implements DomainMessageSerializer
+class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessageSerializer
 {
     /**
      * @var SerializerInterface

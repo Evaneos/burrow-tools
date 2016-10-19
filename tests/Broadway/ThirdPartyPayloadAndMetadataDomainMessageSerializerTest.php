@@ -6,10 +6,10 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\Serializer\SerializerInterface;
-use Burrow\Broadway\ArrayDomainMessageSerializer;
+use Burrow\Broadway\ThirdPartyPayloadAndMetadataDomainMessageSerializer;
 use Burrow\Broadway\DomainMessageSerializer;
 
-class ArrayDomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
+class ThirdPartyPayloadAndMetadataDomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var SerializerInterface
@@ -42,7 +42,7 @@ class ArrayDomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
         $time = DateTime::fromString('2015-01-01');
         $event = new DomainMessage('a', 0, $metadata, $payload, $time);
 
-        $serializer = new ArrayDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
+        $serializer = new ThirdPartyPayloadAndMetadataDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
 
         $this->metadataSerializer->shouldReceive('serialize')
              ->with($metadata)
@@ -74,7 +74,7 @@ class ArrayDomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
         $time = DateTime::fromString('2015-01-01');
         $event = new DomainMessage('a', 0, $metadata, $payload, $time);
 
-        $serializer = new ArrayDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
+        $serializer = new ThirdPartyPayloadAndMetadataDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
 
         $this->metadataSerializer->shouldReceive('deserialize')
             ->with(['metadata'])
