@@ -6,14 +6,20 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
 use Broadway\Serializer\SerializerInterface;
+use Burrow\Broadway\ThirdPartyPayloadAndMetadataDomainMessageSerializer;
 use Burrow\Broadway\DomainMessageSerializer;
 
-class DomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
+class ThirdPartyPayloadAndMetadataDomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var SerializerInterface
      */
-    private $innerSerializer;
+    private $payloadSerializer;
+
+    /**
+     * @var SerializerInterface
+     */
+    private $metadataSerializer;
 
     protected function tearDown()
     {
@@ -22,7 +28,8 @@ class DomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->innerSerializer = \Mockery::mock(SerializerInterface::class);
+        $this->payloadSerializer = \Mockery::mock(SerializerInterface::class);
+        $this->metadataSerializer = \Mockery::mock(SerializerInterface::class);
     }
 
     /**
@@ -35,13 +42,13 @@ class DomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
         $time = DateTime::fromString('2015-01-01');
         $event = new DomainMessage('a', 0, $metadata, $payload, $time);
 
-        $serializer = new DomainMessageSerializer($this->innerSerializer);
+        $serializer = new ThirdPartyPayloadAndMetadataDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
 
-        $this->innerSerializer->shouldReceive('serialize')
+        $this->metadataSerializer->shouldReceive('serialize')
              ->with($metadata)
              ->andReturn(['metadata']);
 
-        $this->innerSerializer->shouldReceive('serialize')
+        $this->payloadSerializer->shouldReceive('serialize')
               ->with($payload)
               ->andReturn(['payload']);
 
@@ -67,13 +74,13 @@ class DomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
         $time = DateTime::fromString('2015-01-01');
         $event = new DomainMessage('a', 0, $metadata, $payload, $time);
 
-        $serializer = new DomainMessageSerializer($this->innerSerializer);
+        $serializer = new ThirdPartyPayloadAndMetadataDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
 
-        $this->innerSerializer->shouldReceive('deserialize')
+        $this->metadataSerializer->shouldReceive('deserialize')
             ->with(['metadata'])
             ->andReturn($metadata);
 
-        $this->innerSerializer->shouldReceive('deserialize')
+        $this->payloadSerializer->shouldReceive('deserialize')
             ->with(['payload'])
             ->andReturn($payload);
 
