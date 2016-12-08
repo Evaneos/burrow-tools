@@ -7,6 +7,7 @@ interface DomainMessageSerializer
 {
     /**
      * @param DomainMessage $object
+     *
      * @return array
      */
     public function serialize(DomainMessage $object);
@@ -15,6 +16,8 @@ interface DomainMessageSerializer
      * @param array $serializedObject
      *
      * @return DomainMessage
+     *
+     * @throws \InvalidArgumentException
      */
     public function deserialize(array $serializedObject);
 }

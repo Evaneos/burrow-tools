@@ -33,11 +33,20 @@ class UniversalCommandSerializer implements CommandSerializer, CommandDeserializ
 
     /**
      * @param string $serializedObject
+     *
      * @return NamedCommand
+     *
+     * @throws \InvalidArgumentException
      */
     public function deserialize($serializedObject)
     {
-        $command = $this->serializer->deserialize(json_decode($serializedObject, true));
+        $serializedCommand = @json_decode($serializedObject, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException(json_last_error_msg());
+        }
+
+        $command = $this->serializer->deserialize($serializedCommand);
 
         if (!$command instanceof NamedCommand) {
             throw new \InvalidArgumentException('The deserialized object is not a command');

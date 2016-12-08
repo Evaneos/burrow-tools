@@ -7,7 +7,10 @@ interface EventDeserializer
 {
     /**
      * @param  string $message
+     *
      * @return EventInterface
+     *
+     * @throws \InvalidArgumentException
      */
     public function deserialize($message);
 }

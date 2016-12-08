@@ -6,6 +6,11 @@ use League\Event\EventInterface;
 
 class JsonEventSerializer implements EventSerializer
 {
+    /**
+     * @param EventInterface $event
+     *
+     * @return string
+     */
     public function serialize(EventInterface $event)
     {
         if (!$event instanceof \JsonSerializable) {

@@ -2,14 +2,13 @@
 
 namespace Burrow\Broadway;
 
+use Assert\Assertion;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainEventStreamInterface;
 
 class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
 {
-    /**
-     * @var DomainMessageSerializer
-     */
+    /** @var DomainMessageSerializer */
     private $serializer;
 
     /**
@@ -24,6 +23,7 @@ class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
 
     /**
      * @param DomainEventStreamInterface $domainEventStream
+     *
      * @return string
      */
     public function serialize(DomainEventStreamInterface $domainEventStream)
@@ -38,11 +38,20 @@ class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
 
     /**
      * @param string $message
+     *
      * @return DomainEventStreamInterface
+     *
+     * @throws \InvalidArgumentException
      */
     public function deserialize($message)
     {
-        $serializedDomainMessageStream = json_decode($message, true);
+        $serializedDomainMessageStream = @json_decode($message, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException(json_last_error_msg());
+        }
+
+        Assertion::isArray($serializedDomainMessageStream);
 
         $domainMessages = [];
         foreach ($serializedDomainMessageStream as $serializedDomainMessage) {
