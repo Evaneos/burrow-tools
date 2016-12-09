@@ -1,7 +1,7 @@
 <?php
 namespace Burrow\Tactician;
 
-use Burrow\Serializer\DeserializationAssertion;
+use Burrow\Serializer\DeserializationGuard;
 use League\Tactician\Plugins\NamedCommand\NamedCommand;
 
 interface CommandDeserializer
@@ -11,7 +11,7 @@ interface CommandDeserializer
      *
      * @return NamedCommand
      *
-     * @throws DeserializationAssertion
+     * @throws DeserializationGuard
      */
     public function deserialize($serializedObject);
 }

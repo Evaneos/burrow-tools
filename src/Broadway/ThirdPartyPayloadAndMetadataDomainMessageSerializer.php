@@ -4,7 +4,7 @@ namespace Burrow\Broadway;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Serializer\SerializerInterface;
-use Burrow\Serializer\DeserializationAssertion;
+use Burrow\Serializer\DeserializationGuard;
 
 class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessageSerializer
 {
@@ -51,7 +51,7 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
      */
     public function deserialize(array $serializedObject)
     {
-        $this->assertArrayCanRepresentASerializedDomainMessage($serializedObject);
+        $this->guardValidSerializedDomainMessage($serializedObject);
 
         return new DomainMessage(
             $serializedObject['id'],
@@ -65,12 +65,12 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
     /**
      * @param array $serializedObject
      */
-    private function assertArrayCanRepresentASerializedDomainMessage(array $serializedObject)
+    private function guardValidSerializedDomainMessage(array $serializedObject)
     {
-        DeserializationAssertion::notEmptyKey($serializedObject, 'id');
-        DeserializationAssertion::keyExists($serializedObject, 'playhead');
-        DeserializationAssertion::keyExists($serializedObject, 'metadata');
-        DeserializationAssertion::notEmptyKey($serializedObject, 'payload');
-        DeserializationAssertion::notEmptyKey($serializedObject, 'recordedOn');
+        DeserializationGuard::notEmptyKey($serializedObject, 'id');
+        DeserializationGuard::keyExists($serializedObject, 'playhead');
+        DeserializationGuard::keyExists($serializedObject, 'metadata');
+        DeserializationGuard::notEmptyKey($serializedObject, 'payload');
+        DeserializationGuard::notEmptyKey($serializedObject, 'recordedOn');
     }
 }
