@@ -2,6 +2,7 @@
 namespace Burrow\Broadway;
 
 use Broadway\Domain\DomainMessage;
+use Burrow\Serializer\DeserializeException;
 
 interface DomainMessageSerializer
 {
@@ -17,7 +18,7 @@ interface DomainMessageSerializer
      *
      * @return DomainMessage
      *
-     * @throws \InvalidArgumentException
+     * @throws DeserializeException
      */
     public function deserialize(array $serializedObject);
 }

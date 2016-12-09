@@ -36,12 +36,7 @@ class EventBusConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        try {
-            $eventStream = $this->serializer->deserialize($message);
-        } catch (\InvalidArgumentException $e) {
-            throw new ConsumerException($e->getMessage(), $e->getCode(), $e);
-        }
-
+        $eventStream = $this->serializer->deserialize($message);
         $this->eventBus->publish($eventStream);
     }
 }

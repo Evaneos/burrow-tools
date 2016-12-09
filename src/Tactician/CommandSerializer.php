@@ -7,6 +7,7 @@ interface CommandSerializer
 {
     /**
      * @param NamedCommand $command
+     *
      * @return string
      */
     public function serialize(NamedCommand $command);

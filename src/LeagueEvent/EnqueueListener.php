@@ -7,14 +7,10 @@ use League\Event\EventInterface;
 
 final class EnqueueListener extends AbstractListener
 {
-    /**
-     * @var QueuePublisher
-     */
+    /** @var QueuePublisher */
     private $publisher;
 
-    /**
-     * @var EventSerializer
-     */
+    /** @var EventSerializer */
     private $serializer;
 
     /**

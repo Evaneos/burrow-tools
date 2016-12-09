@@ -7,24 +7,16 @@ use Burrow\QueuePublisher;
 
 class QueuePublishingEventBus extends SimpleEventBus
 {
-    /**
-     * @var DomainEventStreamInterface[]
-     */
+    /** @var DomainEventStreamInterface[] */
     private $queue;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $isPublishing;
 
-    /**
-     * @var DomainEventStreamSerializer
-     */
+    /** @var DomainEventStreamSerializer */
     private $serializer;
 
-    /**
-     * @var QueuePublisher
-     */
+    /** @var QueuePublisher */
     private $queuePublisher;
 
     /**

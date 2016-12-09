@@ -3,6 +3,7 @@
 namespace Burrow\Broadway;
 
 use Broadway\Domain\DomainEventStreamInterface;
+use Burrow\Serializer\DeserializeException;
 
 interface DomainEventStreamSerializer
 {
@@ -18,7 +19,7 @@ interface DomainEventStreamSerializer
      *
      * @return DomainEventStreamInterface
      *
-     * @throws \InvalidArgumentException
+     * @throws DeserializeException
      */
     public function deserialize($message);
 }

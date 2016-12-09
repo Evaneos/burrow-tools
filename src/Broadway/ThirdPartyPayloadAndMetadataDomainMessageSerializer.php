@@ -1,10 +1,10 @@
 <?php
 namespace Burrow\Broadway;
 
-use Assert\Assertion;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Serializer\SerializerInterface;
+use Burrow\Serializer\DeserializationAssertion;
 
 class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessageSerializer
 {
@@ -67,10 +67,10 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
      */
     private function assertArrayCanRepresentASerializedDomainMessage(array $serializedObject)
     {
-        Assertion::notEmptyKey($serializedObject, 'id');
-        Assertion::keyExists($serializedObject, 'playhead');
-        Assertion::keyExists($serializedObject, 'metadata');
-        Assertion::notEmptyKey($serializedObject, 'payload');
-        Assertion::notEmptyKey($serializedObject, 'recordedOn');
+        DeserializationAssertion::notEmptyKey($serializedObject, 'id');
+        DeserializationAssertion::keyExists($serializedObject, 'playhead');
+        DeserializationAssertion::keyExists($serializedObject, 'metadata');
+        DeserializationAssertion::notEmptyKey($serializedObject, 'payload');
+        DeserializationAssertion::notEmptyKey($serializedObject, 'recordedOn');
     }
 }

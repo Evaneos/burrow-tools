@@ -7,14 +7,10 @@ use League\Tactician\CommandBus;
 
 class CommandBusConsumer implements QueueConsumer
 {
-    /**
-     * @var CommandDeserializer
-     */
+    /** @var CommandDeserializer */
     private $deserializer;
 
-    /**
-     * @var CommandBus
-     */
+    /** @var CommandBus */
     private $commandBus;
 
     /**
@@ -40,12 +36,7 @@ class CommandBusConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        try {
-            $command = $this->deserializer->deserialize($message);
-        } catch (\InvalidArgumentException $e) {
-            throw new ConsumerException($e->getMessage(), $e->getCode(), $e);
-        }
-
+        $command = $this->deserializer->deserialize($message);
         return $this->commandBus->handle($command);
     }
 }

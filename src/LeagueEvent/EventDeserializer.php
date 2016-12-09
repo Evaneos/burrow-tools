@@ -1,6 +1,7 @@
 <?php
 namespace Burrow\LeagueEvent;
 
+use Burrow\Serializer\DeserializeException;
 use League\Event\EventInterface;
 
 interface EventDeserializer
@@ -10,7 +11,7 @@ interface EventDeserializer
      *
      * @return EventInterface
      *
-     * @throws \InvalidArgumentException
+     * @throws DeserializeException
      */
     public function deserialize($message);
 }

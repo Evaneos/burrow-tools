@@ -7,14 +7,10 @@ use League\Tactician\Plugins\NamedCommand\NamedCommand;
 
 class QueuePublishingMiddleware implements Middleware
 {
-    /**
-     * @var CommandSerializer
-     */
+    /** @var CommandSerializer */
     private $serializer;
 
-    /**
-     * @var QueuePublisher
-     */
+    /** @var QueuePublisher */
     private $queuePublisher;
 
     /**

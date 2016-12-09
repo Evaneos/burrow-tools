@@ -2,14 +2,13 @@
 
 namespace Burrow\Tactician;
 
+use Burrow\Serializer\DeserializeException;
 use League\Tactician\Plugins\NamedCommand\NamedCommand;
 use RemiSan\Serializer\Serializer;
 
 class UniversalCommandSerializer implements CommandSerializer, CommandDeserializer
 {
-    /**
-     * @var Serializer
-     */
+    /** @var Serializer */
     private $serializer;
 
     /**
@@ -36,20 +35,20 @@ class UniversalCommandSerializer implements CommandSerializer, CommandDeserializ
      *
      * @return NamedCommand
      *
-     * @throws \InvalidArgumentException
+     * @throws DeserializeException
      */
     public function deserialize($serializedObject)
     {
         $serializedCommand = @json_decode($serializedObject, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \InvalidArgumentException(json_last_error_msg());
+            throw new DeserializeException(json_last_error_msg());
         }
 
         $command = $this->serializer->deserialize($serializedCommand);
 
         if (!$command instanceof NamedCommand) {
-            throw new \InvalidArgumentException('The deserialized object is not a command');
+            throw new DeserializeException('The deserialized object is not a command');
         }
 
         return $command;

@@ -7,14 +7,10 @@ use League\Event\EmitterInterface;
 
 final class EventQueueConsumer implements QueueConsumer
 {
-    /**
-     * @var EmitterInterface
-     */
+    /** @var EmitterInterface */
     private $emitter;
 
-    /**
-     * @var EventDeserializer
-     */
+    /** @var EventDeserializer */
     private $deserializer;
 
     /**
@@ -41,12 +37,7 @@ final class EventQueueConsumer implements QueueConsumer
      */
     public function consume($message)
     {
-        try {
-            $event = $this->deserializer->deserialize($message);
-        } catch (\InvalidArgumentException $e) {
-            throw new ConsumerException($e->getMessage(), $e->getCode(), $e);
-        }
-
+        $event = $this->deserializer->deserialize($message);
         $this->emitter->emit($event);
     }
 }

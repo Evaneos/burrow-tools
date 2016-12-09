@@ -2,6 +2,7 @@
 
 namespace Burrow\tests\Tactician;
 
+use Burrow\Serializer\DeserializeException;
 use Burrow\Tactician\UniversalCommandSerializer;
 use League\Tactician\Plugins\NamedCommand\NamedCommand;
 use RemiSan\Serializer\Serializer;
@@ -64,7 +65,7 @@ class UniversalCommandSerializerTest extends \PHPUnit_Framework_TestCase
 
         $serializer = new UniversalCommandSerializer($this->serializer);
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->setExpectedException(DeserializeException::class);
 
         $serializer->deserialize('[]');
     }
