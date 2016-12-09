@@ -65,7 +65,7 @@ class UniversalCommandSerializerTest extends \PHPUnit_Framework_TestCase
 
         $serializer = new UniversalCommandSerializer($this->serializer);
 
-        $this->setExpectedException(DeserializeException::class);
+        $this->setExpectedException(\InvalidArgumentException::class);
 
         $serializer->deserialize('[]');
     }

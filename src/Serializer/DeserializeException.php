@@ -2,8 +2,6 @@
 
 namespace Burrow\Serializer;
 
-use Burrow\Exception\ConsumerException;
-
-class DeserializeException extends ConsumerException
+class DeserializeException extends \InvalidArgumentException
 {
 }
