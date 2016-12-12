@@ -7,6 +7,7 @@ interface EventSerializer
 {
     /**
      * @param  EventInterface $event
+     *
      * @return string
      */
     public function serialize(EventInterface $event);

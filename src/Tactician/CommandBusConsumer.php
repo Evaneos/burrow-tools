@@ -1,19 +1,16 @@
 <?php
 namespace Burrow\Tactician;
 
+use Burrow\Exception\ConsumerException;
 use Burrow\QueueConsumer;
 use League\Tactician\CommandBus;
 
 class CommandBusConsumer implements QueueConsumer
 {
-    /**
-     * @var CommandDeserializer
-     */
+    /** @var CommandDeserializer */
     private $deserializer;
 
-    /**
-     * @var CommandBus
-     */
+    /** @var CommandBus */
     private $commandBus;
 
     /**
@@ -32,10 +29,14 @@ class CommandBusConsumer implements QueueConsumer
      * Consumes a message
      *
      * @param  string $message
-     * @return string|null|void
+     *
+     * @return mixed
+     *
+     * @throws ConsumerException
      */
     public function consume($message)
     {
-        return $this->commandBus->handle($this->deserializer->deserialize($message));
+        $command = $this->deserializer->deserialize($message);
+        return $this->commandBus->handle($command);
     }
 }

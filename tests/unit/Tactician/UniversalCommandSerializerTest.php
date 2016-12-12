@@ -2,6 +2,7 @@
 
 namespace Burrow\tests\Tactician;
 
+use Burrow\Serializer\DeserializeException;
 use Burrow\Tactician\UniversalCommandSerializer;
 use League\Tactician\Plugins\NamedCommand\NamedCommand;
 use RemiSan\Serializer\Serializer;

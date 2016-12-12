@@ -2,18 +2,15 @@
 namespace Burrow\Broadway;
 
 use Broadway\EventHandling\EventBusInterface;
+use Burrow\Exception\ConsumerException;
 use Burrow\QueueConsumer;
 
 class EventBusConsumer implements QueueConsumer
 {
-    /**
-     * @var DomainEventStreamSerializer
-     */
+    /** @var DomainEventStreamSerializer */
     private $serializer;
 
-    /**
-     * @var EventBusInterface
-     */
+    /** @var EventBusInterface */
     private $eventBus;
 
     /**
@@ -32,7 +29,10 @@ class EventBusConsumer implements QueueConsumer
      * Consumes a message
      *
      * @param  string $message
-     * @return string|null|void
+     *
+     * @return void
+     *
+     * @throws ConsumerException
      */
     public function consume($message)
     {

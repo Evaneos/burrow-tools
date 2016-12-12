@@ -4,16 +4,14 @@ namespace Burrow\Broadway;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Serializer\SerializerInterface;
+use Burrow\Serializer\DeserializationGuard;
 
 class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessageSerializer
 {
-    /**
-     * @var SerializerInterface
-     */
+    /** @var SerializerInterface */
     private $payloadSerializer;
-    /**
-     * @var SerializerInterface
-     */
+
+    /** @var SerializerInterface */
     private $metadataSerializer;
 
     /**
@@ -30,6 +28,7 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
 
     /**
      * @param DomainMessage $object
+     *
      * @return array
      */
     public function serialize(DomainMessage $object)
@@ -47,9 +46,13 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
      * @param array $serializedObject
      *
      * @return DomainMessage
+     *
+     * @throws \InvalidArgumentException
      */
     public function deserialize(array $serializedObject)
     {
+        $this->guardValidSerializedDomainMessage($serializedObject);
+
         return new DomainMessage(
             $serializedObject['id'],
             $serializedObject['playhead'],
@@ -57,5 +60,17 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
             $this->payloadSerializer->deserialize($serializedObject['payload']),
             DateTime::fromString($serializedObject['recordedOn'])
         );
+    }
+
+    /**
+     * @param array $serializedObject
+     */
+    private function guardValidSerializedDomainMessage(array $serializedObject)
+    {
+        DeserializationGuard::notEmptyKey($serializedObject, 'id');
+        DeserializationGuard::keyExists($serializedObject, 'playhead');
+        DeserializationGuard::keyExists($serializedObject, 'metadata');
+        DeserializationGuard::notEmptyKey($serializedObject, 'payload');
+        DeserializationGuard::notEmptyKey($serializedObject, 'recordedOn');
     }
 }

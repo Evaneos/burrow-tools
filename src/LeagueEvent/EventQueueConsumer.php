@@ -1,19 +1,16 @@
 <?php
 namespace Burrow\LeagueEvent;
 
+use Burrow\Exception\ConsumerException;
 use Burrow\QueueConsumer;
 use League\Event\EmitterInterface;
 
 final class EventQueueConsumer implements QueueConsumer
 {
-    /**
-     * @var EmitterInterface
-     */
+    /** @var EmitterInterface */
     private $emitter;
 
-    /**
-     * @var EventDeserializer
-     */
+    /** @var EventDeserializer */
     private $deserializer;
 
     /**
@@ -33,12 +30,14 @@ final class EventQueueConsumer implements QueueConsumer
      * Consumes a message
      *
      * @param  string $message
+     *
      * @return void
+     *
+     * @throws ConsumerException
      */
     public function consume($message)
     {
-        $message = $this->deserializer->deserialize($message);
-
-        $this->emitter->emit($message);
+        $event = $this->deserializer->deserialize($message);
+        $this->emitter->emit($event);
     }
 }

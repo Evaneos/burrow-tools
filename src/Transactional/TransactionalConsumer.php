@@ -9,14 +9,10 @@ use RemiSan\TransactionManager\Transactional;
 
 class TransactionalConsumer implements QueueConsumer
 {
-    /**
-     * @var QueueConsumer
-     */
+    /** @var QueueConsumer */
     private $consumer;
 
-    /**
-     * @var Transactional
-     */
+    /** @var Transactional */
     private $transactionManager;
 
     /**
