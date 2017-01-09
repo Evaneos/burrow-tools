@@ -2,10 +2,17 @@
     "name": "selrahcd/burrow-tools",
     "description": "Some tools making life easier with evaneos/Burrow",
     "license": "MIT",
-   
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:evaneos/daemon"
+        }
+    ],
+
     "require" : {
         "php": ">=5.5",
-        "evaneos/burrow": "^3.0",
+        "evaneos/burrow": "dev-amqp-pecl",
         "beberlei/assert": "^2.6"
     },
 

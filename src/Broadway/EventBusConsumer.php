@@ -28,13 +28,12 @@ class EventBusConsumer implements QueueConsumer
     /**
      * Consumes a message
      *
-     * @param  string $message
+     * @param string $message
+     * @param array  $headers
      *
      * @return void
-     *
-     * @throws ConsumerException
      */
-    public function consume($message)
+    public function consume($message, array $headers = [])
     {
         $eventStream = $this->serializer->deserialize($message);
         $this->eventBus->publish($eventStream);
