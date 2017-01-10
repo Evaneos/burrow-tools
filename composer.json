@@ -3,16 +3,9 @@
     "description": "Some tools making life easier with evaneos/Burrow",
     "license": "MIT",
 
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:evaneos/daemon"
-        }
-    ],
-
     "require" : {
         "php": ">=5.5",
-        "evaneos/burrow": "dev-amqp-pecl",
+        "evaneos/burrow": "^4.0",
         "beberlei/assert": "^2.6"
     },
 
