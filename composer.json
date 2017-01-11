@@ -2,10 +2,10 @@
     "name": "selrahcd/burrow-tools",
     "description": "Some tools making life easier with evaneos/Burrow",
     "license": "MIT",
-   
+
     "require" : {
         "php": ">=5.5",
-        "evaneos/burrow": "^3.0",
+        "evaneos/burrow": "^4.0",
         "beberlei/assert": "^2.6"
     },
 

@@ -30,13 +30,14 @@ class TransactionalConsumer implements QueueConsumer
     /**
      * Consumes a message.
      *
-     * @param  string $message
+     * @param string $message
+     * @param array  $headers
      *
-     * @return string|null|void
+     * @return null|string|void
      *
      * @throws \Exception
      */
-    public function consume($message)
+    public function consume($message, array $headers = [])
     {
         try {
             $this->transactionManager->beginTransaction();
@@ -45,7 +46,7 @@ class TransactionalConsumer implements QueueConsumer
         }
 
         try {
-            $this->consumer->consume($message);
+            $this->consumer->consume($message, $headers);
             $this->transactionManager->commit();
         } catch (\Exception $e) {
             $this->transactionManager->rollback();
