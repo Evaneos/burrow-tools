@@ -1,8 +1,7 @@
 <?php
 namespace Burrow\Broadway;
 
-use Broadway\EventHandling\EventBusInterface;
-use Burrow\Exception\ConsumerException;
+use Broadway\EventHandling\EventBus;
 use Burrow\QueueConsumer;
 
 class EventBusConsumer implements QueueConsumer
@@ -10,16 +9,16 @@ class EventBusConsumer implements QueueConsumer
     /** @var DomainEventStreamSerializer */
     private $serializer;
 
-    /** @var EventBusInterface */
+    /** @var EventBus */
     private $eventBus;
 
     /**
      * Constructor
      *
      * @param DomainEventStreamSerializer $serializer
-     * @param EventBusInterface           $eventBus
+     * @param EventBus           $eventBus
      */
-    public function __construct(DomainEventStreamSerializer $serializer, EventBusInterface $eventBus)
+    public function __construct(DomainEventStreamSerializer $serializer, EventBus $eventBus)
     {
         $this->serializer = $serializer;
         $this->eventBus = $eventBus;

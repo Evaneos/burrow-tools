@@ -2,22 +2,22 @@
 
 namespace Burrow\Broadway;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 use Burrow\Serializer\DeserializeException;
 
 interface DomainEventStreamSerializer
 {
     /**
-     * @param DomainEventStreamInterface $domainEventStream
+     * @param DomainEventStream $domainEventStream
      *
      * @return string
      */
-    public function serialize(DomainEventStreamInterface $domainEventStream);
+    public function serialize(DomainEventStream $domainEventStream);
 
     /**
      * @param string $message
      *
-     * @return DomainEventStreamInterface
+     * @return DomainEventStream
      *
      * @throws DeserializeException
      */
