@@ -3,24 +3,24 @@ namespace Burrow\Broadway;
 
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
-use Broadway\Serializer\SerializerInterface;
+use Broadway\Serializer\Serializer;
 use Burrow\Serializer\DeserializationGuard;
 
 class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessageSerializer
 {
-    /** @var SerializerInterface */
+    /** @var Serializer */
     private $payloadSerializer;
 
-    /** @var SerializerInterface */
+    /** @var Serializer */
     private $metadataSerializer;
 
     /**
      * Constructor
      *
-     * @param SerializerInterface $payloadSerializer
-     * @param SerializerInterface $metadataSerializer
+     * @param Serializer $payloadSerializer
+     * @param Serializer $metadataSerializer
      */
-    public function __construct(SerializerInterface $payloadSerializer, SerializerInterface $metadataSerializer)
+    public function __construct(Serializer $payloadSerializer, Serializer $metadataSerializer)
     {
         $this->payloadSerializer = $payloadSerializer;
         $this->metadataSerializer = $metadataSerializer;

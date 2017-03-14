@@ -1,13 +1,13 @@
 <?php
 namespace Burrow\Broadway;
 
-use Broadway\Domain\DomainEventStreamInterface;
+use Broadway\Domain\DomainEventStream;
 use Broadway\EventHandling\SimpleEventBus;
 use Burrow\QueuePublisher;
 
 class QueuePublishingEventBus extends SimpleEventBus
 {
-    /** @var DomainEventStreamInterface[] */
+    /** @var DomainEventStream[] */
     private $queue;
 
     /** @var bool */
@@ -36,10 +36,10 @@ class QueuePublishingEventBus extends SimpleEventBus
     /**
      * Publishes the events from the domain event stream to the listeners.
      *
-     * @param DomainEventStreamInterface $domainMessages
+     * @param DomainEventStream $domainMessages
      * @throws \Exception
      */
-    public function publish(DomainEventStreamInterface $domainMessages)
+    public function publish(DomainEventStream $domainMessages)
     {
         $this->queue[] = $domainMessages;
 

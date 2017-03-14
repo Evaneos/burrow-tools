@@ -3,7 +3,6 @@
 namespace Burrow\Broadway;
 
 use Broadway\Domain\DomainEventStream;
-use Broadway\Domain\DomainEventStreamInterface;
 use Burrow\Serializer\DeserializeException;
 use Burrow\Serializer\DeserializationGuard;
 
@@ -23,11 +22,11 @@ class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
     }
 
     /**
-     * @param DomainEventStreamInterface $domainEventStream
+     * @param DomainEventStream $domainEventStream
      *
      * @return string
      */
-    public function serialize(DomainEventStreamInterface $domainEventStream)
+    public function serialize(DomainEventStream $domainEventStream)
     {
         $serializedDomainMessages = [];
         foreach ($domainEventStream as $domainMessage) {
@@ -40,7 +39,7 @@ class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
     /**
      * @param string $message
      *
-     * @return DomainEventStreamInterface
+     * @return DomainEventStream
      *
      * @throws DeserializeException
      */

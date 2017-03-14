@@ -5,19 +5,18 @@ namespace Burrow\tests\Console;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\Serializer\SerializerInterface;
+use Broadway\Serializer\Serializer;
 use Burrow\Broadway\ThirdPartyPayloadAndMetadataDomainMessageSerializer;
-use Burrow\Broadway\DomainMessageSerializer;
 
 class ThirdPartyPayloadAndMetadataDomainMessageSerializerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var SerializerInterface
+     * @var Serializer
      */
     private $payloadSerializer;
 
     /**
-     * @var SerializerInterface
+     * @var Serializer
      */
     private $metadataSerializer;
 
@@ -28,8 +27,8 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializerTest extends \PHPUnit_F
 
     protected function setUp()
     {
-        $this->payloadSerializer = \Mockery::mock(SerializerInterface::class);
-        $this->metadataSerializer = \Mockery::mock(SerializerInterface::class);
+        $this->payloadSerializer = \Mockery::mock(Serializer::class);
+        $this->metadataSerializer = \Mockery::mock(Serializer::class);
     }
 
     /**

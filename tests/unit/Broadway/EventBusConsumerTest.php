@@ -6,7 +6,7 @@ use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainEventStream;
 use Broadway\Domain\DomainMessage;
 use Broadway\Domain\Metadata;
-use Broadway\EventHandling\EventBusInterface;
+use Broadway\EventHandling\EventBus;
 use Burrow\Broadway\DomainEventStreamSerializer;
 use Burrow\Broadway\EventBusConsumer;
 
@@ -18,7 +18,7 @@ class EventBusConsumerTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var EventBusInterface
+     * @var EventBus
      */
     private $eventBus;
 
@@ -29,7 +29,7 @@ class EventBusConsumerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->eventBus = \Mockery::mock(EventBusInterface::class);
+        $this->eventBus = \Mockery::mock(EventBus::class);
         $this->serializer = \Mockery::mock(DomainEventStreamSerializer::class);
     }
 
