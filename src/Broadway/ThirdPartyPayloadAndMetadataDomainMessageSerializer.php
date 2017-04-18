@@ -1,10 +1,14 @@
 <?php
+
 namespace Burrow\Broadway;
 
+use Assert\Assertion;
+use Assert\InvalidArgumentException;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Serializer\Serializer;
 use Burrow\Serializer\DeserializationGuard;
+use Burrow\Serializer\DeserializeException;
 
 class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessageSerializer
 {
@@ -34,10 +38,10 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
     public function serialize(DomainMessage $object)
     {
         return [
-            'id'         => $object->getId(),
-            'playhead'   => $object->getPlayhead(),
-            'metadata'   => $this->metadataSerializer->serialize($object->getMetadata()),
-            'payload'    => $this->payloadSerializer->serialize($object->getPayload()),
+            'id' => $object->getId(),
+            'playhead' => $object->getPlayhead(),
+            'metadata' => $this->metadataSerializer->serialize($object->getMetadata()),
+            'payload' => $this->payloadSerializer->serialize($object->getPayload()),
             'recordedOn' => $object->getRecordedOn()->toString()
         ];
     }
@@ -64,13 +68,19 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessa
 
     /**
      * @param array $serializedObject
+     * @throws DeserializeException
      */
     private function guardValidSerializedDomainMessage(array $serializedObject)
     {
-        DeserializationGuard::notEmptyKey($serializedObject, 'id');
-        DeserializationGuard::keyExists($serializedObject, 'playhead');
-        DeserializationGuard::keyExists($serializedObject, 'metadata');
-        DeserializationGuard::notEmptyKey($serializedObject, 'payload');
-        DeserializationGuard::notEmptyKey($serializedObject, 'recordedOn');
+        try {
+            Assertion::notEmptyKey($serializedObject, 'id');
+            Assertion::keyExists($serializedObject, 'playhead');
+            Assertion::keyExists($serializedObject, 'metadata');
+            Assertion::notEmptyKey($serializedObject, 'payload');
+            Assertion::notEmptyKey($serializedObject, 'recordedOn');
+        } catch (InvalidArgumentException $exception) {
+            //@TODO remove this try catch in BC
+            throw new DeserializeException($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
 }
