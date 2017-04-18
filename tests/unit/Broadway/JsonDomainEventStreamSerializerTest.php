@@ -71,7 +71,7 @@ class JsonDomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Burrow\Serializer\DeserializeException
      * @dataProvider getMalformedDomainMessagesExample
      */
-    public function it_should_failed_to_deserialize_an_array_of_domain_messages($serialized)
+    public function it_fail_to_deserialize_an_array_of_domain_messages_from_a_malformed_message($serialized)
     {
         $serializer = new JsonDomainEventStreamSerializer($this->serializer);
         $serializer->deserialize($serialized);
