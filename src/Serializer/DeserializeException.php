@@ -2,6 +2,8 @@
 
 namespace Burrow\Serializer;
 
-class DeserializeException extends \InvalidArgumentException
+use Assert\InvalidArgumentException;
+
+class DeserializeException extends InvalidArgumentException
 {
 }
