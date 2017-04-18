@@ -7,7 +7,6 @@ use Assert\InvalidArgumentException;
 use Broadway\Domain\DateTime;
 use Broadway\Domain\DomainMessage;
 use Broadway\Serializer\Serializer;
-use Burrow\Serializer\DeserializationGuard;
 use Burrow\Serializer\DeserializeException;
 
 class ThirdPartyPayloadAndMetadataDomainMessageSerializer implements DomainMessageSerializer

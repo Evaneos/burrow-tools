@@ -101,7 +101,7 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializerTest extends \PHPUnit_F
      * @expectedException \Burrow\Serializer\DeserializeException
      * @dataProvider getMalformedDomainMessageExample
      */
-    public function it_fail_to_deserialize_to_a_DomainMessage_from_a_malformed_message($serialized)
+    public function it_fails_to_deserialize_to_a_DomainMessage_from_a_malformed_message($serialized)
     {
         $serializer = new ThirdPartyPayloadAndMetadataDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
 
