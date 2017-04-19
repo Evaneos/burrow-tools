@@ -44,19 +44,19 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializerTest extends \PHPUnit_F
         $serializer = new ThirdPartyPayloadAndMetadataDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
 
         $this->metadataSerializer->shouldReceive('serialize')
-             ->with($metadata)
-             ->andReturn(['metadata']);
+            ->with($metadata)
+            ->andReturn(['metadata']);
 
         $this->payloadSerializer->shouldReceive('serialize')
-              ->with($payload)
-              ->andReturn(['payload']);
+            ->with($payload)
+            ->andReturn(['payload']);
 
         $serialized = $serializer->serialize($event);
         $expected = [
-            'id'         => 'a',
-            'playhead'   => 0,
-            'metadata'   => ['metadata'],
-            'payload'    => ['payload'],
+            'id' => 'a',
+            'playhead' => 0,
+            'metadata' => ['metadata'],
+            'payload' => ['payload'],
             'recordedOn' => (new \DateTime('2015-01-01'))->format(DateTime::FORMAT_STRING)
         ];
 
@@ -84,15 +84,76 @@ class ThirdPartyPayloadAndMetadataDomainMessageSerializerTest extends \PHPUnit_F
             ->andReturn($payload);
 
         $serialized = [
-            'id'         => 'a',
-            'playhead'   => 0,
-            'metadata'   => ['metadata'],
-            'payload'    => ['payload'],
+            'id' => 'a',
+            'playhead' => 0,
+            'metadata' => ['metadata'],
+            'payload' => ['payload'],
             'recordedOn' => (new \DateTime('2015-01-01'))->format(DateTime::FORMAT_STRING)
         ];
 
         $deserialized = $serializer->deserialize($serialized);
 
         $this->assertEquals($event, $deserialized);
+    }
+
+    /**
+     * @test
+     * @expectedException \Burrow\Serializer\DeserializeException
+     * @dataProvider getMalformedDomainMessageExample
+     */
+    public function it_fails_to_deserialize_to_a_DomainMessage_from_a_malformed_message($serialized)
+    {
+        $serializer = new ThirdPartyPayloadAndMetadataDomainMessageSerializer($this->payloadSerializer, $this->metadataSerializer);
+
+        $serializer->deserialize($serialized);
+    }
+
+    public function getMalformedDomainMessageExample()
+    {
+        return [
+            [
+                [
+                    'id' => '',
+                    'playhead' => 0,
+                    'metadata' => ['metadata'],
+                    'payload' => ['payload'],
+                    'recordedOn' => (new \DateTime('2015-01-01'))->format(DateTime::FORMAT_STRING)
+                ],
+            ],
+            [
+                [
+                    'id' => 'a',
+                    'metadata' => ['metadata'],
+                    'payload' => ['payload'],
+                    'recordedOn' => (new \DateTime('2015-01-01'))->format(DateTime::FORMAT_STRING)
+                ],
+            ],
+            [
+                [
+                    'id' => 'a',
+                    'playhead' => 0,
+                    'payload' => ['payload'],
+                    'recordedOn' => (new \DateTime('2015-01-01'))->format(DateTime::FORMAT_STRING)
+                ],
+            ],
+            [
+                [
+                    'id' => 'a',
+                    'playhead' => 0,
+                    'metadata' => ['metadata'],
+                    'payload' => [],
+                    'recordedOn' => (new \DateTime('2015-01-01'))->format(DateTime::FORMAT_STRING)
+                ],
+            ],
+            [
+                [
+                    'id' => 'a',
+                    'playhead' => 0,
+                    'metadata' => ['metadata'],
+                    'payload' => ['payload'],
+                    'recordedOn' => ''
+                ],
+            ]
+        ];
     }
 }

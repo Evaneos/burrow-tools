@@ -9,7 +9,7 @@ use Broadway\Domain\Metadata;
 use Burrow\Broadway\DomainMessageSerializer;
 use Burrow\Broadway\JsonDomainEventStreamSerializer;
 
-class DomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
+class JsonDomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var DomainMessageSerializer
@@ -37,8 +37,8 @@ class DomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->serializer->shouldReceive('serialize')
-             ->with($event)
-             ->andReturn(['serialized']);
+            ->with($event)
+            ->andReturn(['serialized']);
 
         $serializer = new JsonDomainEventStreamSerializer($this->serializer);
         $serialized = $serializer->serialize($stream);
@@ -57,12 +57,35 @@ class DomainEventStreamSerializerTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->serializer->shouldReceive('deserialize')
-             ->with(['serialized'])
-             ->andReturn($event);
+            ->with(['serialized'])
+            ->andReturn($event);
 
         $serializer = new JsonDomainEventStreamSerializer($this->serializer);
         $deserialized = $serializer->deserialize('[["serialized"]]');
 
         $this->assertEquals($stream, $deserialized);
+    }
+
+    /**
+     * @test
+     * @expectedException \Burrow\Serializer\DeserializeException
+     * @dataProvider getMalformedDomainMessagesExample
+     */
+    public function it_fails_to_deserialize_an_array_of_domain_messages_from_a_malformed_message($serialized)
+    {
+        $serializer = new JsonDomainEventStreamSerializer($this->serializer);
+        $serializer->deserialize($serialized);
+    }
+
+    public function getMalformedDomainMessagesExample()
+    {
+        return [
+            [
+                '"example"'
+            ],
+            [
+                '['
+            ],
+        ];
     }
 }

@@ -2,9 +2,10 @@
 
 namespace Burrow\Broadway;
 
+use Assert\Assertion;
+use Assert\InvalidArgumentException;
 use Broadway\Domain\DomainEventStream;
 use Burrow\Serializer\DeserializeException;
-use Burrow\Serializer\DeserializationGuard;
 
 class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
 {
@@ -51,7 +52,12 @@ class JsonDomainEventStreamSerializer implements DomainEventStreamSerializer
             throw new DeserializeException(json_last_error_msg());
         }
 
-        DeserializationGuard::isArray($serializedDomainMessageStream);
+        try {
+            Assertion::isArray($serializedDomainMessageStream);
+        } catch (InvalidArgumentException $exception) {
+            //@TODO remove this try catch in BC
+            throw new DeserializeException($exception->getMessage(), $exception->getCode(), $exception);
+        }
 
         $domainMessages = [];
         foreach ($serializedDomainMessageStream as $serializedDomainMessage) {
