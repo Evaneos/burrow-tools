@@ -1,6 +1,8 @@
 <?php
 namespace Burrow\LeagueEvent;
 
+use Burrow\EmptyHeadersFactory;
+use Burrow\HeadersFactory;
 use Burrow\QueuePublisher;
 use League\Event\AbstractListener;
 use League\Event\EventInterface;
@@ -12,6 +14,10 @@ final class EnqueueListener extends AbstractListener
 
     /** @var EventSerializer */
     private $serializer;
+    /**
+     * @var Headersfactory
+     */
+    private $headersfactory;
 
     /**
      * EnqueueListener constructor.
@@ -23,6 +29,12 @@ final class EnqueueListener extends AbstractListener
     {
         $this->publisher = $publisher;
         $this->serializer = $serializer;
+        $this->headersfactory = new EmptyHeadersFactory();
+    }
+
+    public function setHeadersFactory(HeadersFactory $headersFactory)
+    {
+        $this->headersfactory = $headersFactory;
     }
 
     /**
@@ -34,10 +46,7 @@ final class EnqueueListener extends AbstractListener
      */
     public function handle(EventInterface $event)
     {
-        $headers = [];
-        if (func_num_args() > 1) {
-            $headers = func_get_arg(1);
-        }
+        $headers = $this->headersfactory->headers();
         $this->publisher->publish($this->serializer->serialize($event), $event->getName(), $headers);
     }
 }
