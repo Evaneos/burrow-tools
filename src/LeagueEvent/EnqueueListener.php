@@ -34,6 +34,10 @@ final class EnqueueListener extends AbstractListener
      */
     public function handle(EventInterface $event)
     {
-        $this->publisher->publish($this->serializer->serialize($event), $event->getName());
+        $headers = [];
+        if (func_num_args() > 1) {
+            $headers = func_get_arg(1);
+        }
+        $this->publisher->publish($this->serializer->serialize($event), $event->getName(), $headers);
     }
 }
