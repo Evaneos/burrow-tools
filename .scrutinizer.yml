@@ -1,0 +1,9 @@
+build:
+    environment:
+        php:
+            version: '5.5'
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
